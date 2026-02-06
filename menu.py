@@ -5,9 +5,7 @@ from logic.statistics import open_statistics
 
 def show_main_menu():
 
-    choice = 0
-    while choice != 4:
-        print(f"choice: {choice}")
+    while True:
         print("=== SportStats CLI ===")
         print("1) Bekijk statistieken")
         print("2) Filter activiteiten")
@@ -31,9 +29,10 @@ def show_main_menu():
 
             elif choice == 4:
                 print("De applicatie wordt afgesloten.")
+                break
 
             else:
                 print("Dit is geen valide optie.\n")
 
         except ValueError:
-            print("Ongeldige invoer!")
+            print("Ongeldige invoer!\n")
