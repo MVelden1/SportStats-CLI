@@ -1,12 +1,12 @@
-# from api.strava_api import get_athlete
-#
-# # TODO nog niet wat het moet zijn
-# def welcome():
-#     athletes = get_athlete()
-#     print(f"Athlete: {athletes}")
-#     for athlete in athletes:
-#         athlete1 = athlete["firstname"], athlete["lastname"]
-#     print(str(athlete1))
-#     return athlete1
-#
+from api.strava_api import get_athlete
+from typing import Callable, Dict, Any
+
+
+# TODO nog niet wat het moet zijn
+def welcome():
+    athlete = get_athlete()
+    name = f"{athlete['firstname']} {athlete['lastname']}"
+    return f"Welkom terug {name}!\n"
+
+# TODO weghalen
 # welcome()

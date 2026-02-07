@@ -1,4 +1,4 @@
-from api.strava_api import get_athlete
+from api.strava_api import get_athlete, get_activities
 from logic.compare import compare_weeks
 from logic.filters import open_filters
 from logic.statistics import open_statistics
@@ -11,7 +11,8 @@ def show_main_menu():
         print("1) Bekijk statistieken")
         print("2) Filter activiteiten")
         print("3) Vergelijk weken")
-        print("4) API TEST")
+        print("4) TEST API athlete")
+        print("4) TEST API activities")
         print("0) Afsluiten\n")
 
         try:
@@ -30,8 +31,12 @@ def show_main_menu():
                 compare_weeks()
 
             elif choice == 4:
-                print("TEST API...")
-                # get_athlete()
+                print("TEST API (athlete endpoint)...")
+                get_athlete()
+
+            elif choice == 5:
+                print("TEST API (activities endpoint)...")
+                get_activities()
 
             elif choice == 0:
                 print("De applicatie wordt afgesloten...")
