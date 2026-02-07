@@ -12,12 +12,12 @@ def get_auth():
 def get_activities():
     url = STRAVA_ACTIVITY_ENDPOINT
     token = os.getenv("ACCESS_TOKEN")
-    headers = {"auhorization": f"Bearer {token}"}
+    headers = {"authorization": f"Bearer {token}"}
 
     response = requests.get(url, headers=headers)
     print(response)
     print(response.json())
-    print("API moet nog worden geïmplementeerd...")
+    print("API moet nog worden geïmplementeerd...\n")
 
 
 def get_athlete():
@@ -31,5 +31,6 @@ def get_athlete():
     print(respons.json())
     return respons.json()
 
-get_athlete()
+# TODO weghalen als klaar
+# get_athlete()
 # get_activities()
