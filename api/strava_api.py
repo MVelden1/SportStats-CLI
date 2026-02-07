@@ -16,10 +16,6 @@ def get_athlete():
     headers = {"authorization": f"Bearer {token}"}
 
     respons = requests.get(url, headers=headers)
-
-    # print(respons.status_code)
-    # print(respons.json())
-
     return respons.json()
 
 # get_athlete()
