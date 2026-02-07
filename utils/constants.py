@@ -1,0 +1,1 @@
+api_strava_athlete = "https://www.strava.com/api/v3/athlete"
