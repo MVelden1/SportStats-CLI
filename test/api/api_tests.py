@@ -13,8 +13,8 @@ def get_athlete_test():
 
 def get_activities_test():
     with open("activities.json", "w") as f:
-        json.dump(get_activities(), f, indent=True)
+        json.dump(get_activities(), f, indent=True)   
 
 
-if __name__ == "__test__":
-    test()
+# if __name__ == "__main__":
+#     test()
