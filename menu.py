@@ -1,13 +1,14 @@
-from api.strava_api import get_athlete, get_activities
+from api import get_athlete, get_activities
 from logic.compare import compare_weeks
 from logic.filters import open_filters
 from logic.statistics import open_statistics
 from logic.welcome import welcome
+from utils import refresh_access_token, get_valid_access_token
 
-
-def show_main_menu():
+def show_main_menu(access_token):
     # TODO: afhandeling bij API niet bereikbaar
-    athlete = get_athlete()
+    # haalt de naam op voor het welkomstbericht
+    athlete = get_athlete(access_token)
     print(welcome(athlete['firstname'], athlete["lastname"]))
 
     while True:
@@ -17,6 +18,8 @@ def show_main_menu():
         print("3) Vergelijk weken")
         print("4) TEST API athlete")
         print("5) TEST API activities")
+        print("6) TEST Refresh token")
+        print("7) TEST Expired token")
         print("0) Afsluiten\n")
 
         try:
@@ -41,6 +44,14 @@ def show_main_menu():
             elif choice == 5:
                 print("TEST API (activities endpoint)...\n")
                 get_activities()
+
+            elif choice == 6:
+                print("TEST API (refresh token)...")
+                refresh_access_token()
+
+            elif choice == 7:
+                print("TEST Expired token...")
+                get_valid_access_token()
 
             elif choice == 0:
                 print("De applicatie wordt afgesloten...")
