@@ -39,11 +39,11 @@ def show_main_menu(access_token):
 
             elif choice == 4:
                 print("TEST API (athlete endpoint)...\n")
-                get_athlete()
+                get_athlete(access_token)
 
             elif choice == 5:
                 print("TEST API (activities endpoint)...\n")
-                get_activities()
+                get_activities(access_token)
 
             elif choice == 6:
                 print("TEST API (refresh token)...")
