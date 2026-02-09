@@ -7,7 +7,7 @@ from utils import refresh_access_token, get_valid_access_token
 
 def show_main_menu(access_token):
     # TODO: afhandeling bij API niet bereikbaar
-    # haalt de naam op voor het welkomstbericht
+    # haalt de naam gebruiker op voor het welkomstbericht
     athlete = get_athlete(access_token)
     print(welcome(athlete['firstname'], athlete["lastname"]))
 
