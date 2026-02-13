@@ -1,6 +1,8 @@
 from api import get_athlete, get_activities
 from logic.compare import compare_weeks
 from logic.filters import open_filters
+from logic.help import help_info
+from logic.performances import calculate_performances
 from logic.statistics import open_statistics
 from logic.welcome import welcome
 from utils import refresh_access_token, get_valid_access_token
@@ -16,14 +18,16 @@ def show_main_menu(access_token):
         print("1) Bekijk statistieken")
         print("2) Filter activiteiten")
         print("3) Vergelijk weken")
-        print("4) TEST API athlete")
-        print("5) TEST API activities")
-        print("6) TEST Refresh token")
-        print("7) TEST Expired token")
+        print("4) Vergelijkbare prestaties berekenen")
+        print("5) Help")
+        print("6) TEST API athlete")
+        print("7) TEST API activities")
+        print("8) TEST Refresh token")
+        print("9) TEST Expired token")
         print("0) Afsluiten\n")
 
         try:
-            choice = int(input("Selecteer een optie (0-4): "))
+            choice = int(input("Selecteer een optie (0-3): "))
 
             if choice == 1:
                 print("Statistieken worden geopend...\n")
@@ -36,6 +40,14 @@ def show_main_menu(access_token):
             elif choice == 3:
                 print("Weken vergelijken...\n")
                 compare_weeks()
+
+            elif choice == 4:
+                print("Vergelijkbare prestaties berekenen...\n")
+                calculate_performances()
+
+            elif choice == 5:
+                print("Help...\n")
+                help_info()
 
             elif choice == 4:
                 print("TEST API (athlete endpoint)...\n")

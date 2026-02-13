@@ -7,7 +7,7 @@ from .constants import (
 )
 
 from .auth import refresh_access_token, load_tokens, get_valid_access_token
-from io_handler import read_json, write_json
+from .io_handler import read_json, write_json
 
 __all__ = [
     "STRAVA_ATHLETE_ENDPOINT",
