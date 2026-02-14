@@ -27,7 +27,7 @@ def show_main_menu(access_token):
         print("0) Afsluiten\n")
 
         try:
-            choice = int(input("Selecteer een optie (0-3): "))
+            choice = int(input("Selecteer een optie (0-5): "))
 
             if choice == 1:
                 print("Statistieken worden geopend...\n")

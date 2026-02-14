@@ -25,12 +25,12 @@ def get_athlete(access_token) -> dict:
     url = STRAVA_ATHLETE_ENDPOINT
     header = _auth_header(access_token)
 
-    respons = requests.get(url, headers=header)
+    athlete = requests.get(url, headers=header)
 
     # TODO: print weghalen als api functionaliteit af is
     # print(respons)
     # print(respons.json())
-    return respons.json()
+    return athlete.json()
 
 def _auth_header(acces_token: str) -> dict:
     return {"Authorization": f"Bearer {acces_token}"}
