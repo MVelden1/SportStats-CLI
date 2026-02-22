@@ -1,5 +1,3 @@
-from re import Match
-
 from api import get_athlete, get_activities
 from logic.compare import compare_weeks
 from logic.filters import open_filters
@@ -29,7 +27,7 @@ def show_main_menu(access_token):
         print("0) Afsluiten\n")
 
         try:
-            choice = int(input("Selecteer een optie (0-5): "))
+            choice = int(input("Selecteer een optie (0-5): ").strip())
 
             match choice:
                 case 1:
