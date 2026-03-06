@@ -1,3 +1,5 @@
+import os
+
 from api import get_athlete, get_activities
 from logic.compare import compare_weeks
 from logic.filters import open_filters
@@ -9,22 +11,28 @@ from utils import refresh_access_token, get_valid_access_token
 
 def show_main_menu(access_token):
     # TODO: afhandeling bij API niet bereikbaar
+    choice = None
+    # os.system('cls' if os.name == 'nt' else 'clear')
     # haalt de naam gebruiker op voor het welkomstbericht
     athlete = get_athlete(access_token)
     print(welcome(athlete['firstname'], athlete["lastname"]))
 
     while True:
+
+        # os.system('cls' if os.name == 'nt' else 'clear')
+
         print("=== SportStats CLI ===")
         print("1) Bekijk statistieken")
         print("2) Filter activiteiten")
         print("3) Vergelijk weken")
         print("4) Vergelijkbare prestaties berekenen")
         print("5) Help")
+        print("0) Afsluiten\n")
+        #TODO weghalen
         print("6) TEST API athlete")
         print("7) TEST API activities")
         print("8) TEST Refresh token")
         print("9) TEST Expired token")
-        print("0) Afsluiten\n")
 
         try:
             choice = int(input("Selecteer een optie (0-5): ").strip())
@@ -32,13 +40,13 @@ def show_main_menu(access_token):
             match choice:
                 case 1:
                     print("Statistieken worden geopend...\n")
-                    open_statistics()
+                    open_statistics(access_token)
                 case 2:
                     print("Filters worden geopend...\n")
-                    open_filters()
+                    open_filters(access_token)
                 case 3:
                     print("Weken vergelijken...\n")
-                    compare_weeks()
+                    compare_weeks(access_token)
                 case 4:
                     print("Vergelijkbare prestaties berekenen...\n")
                     calculate_performances()
@@ -67,3 +75,8 @@ def show_main_menu(access_token):
 
         except ValueError:
             print("Ongeldige invoer!\n")
+        
+
+        if choice is not None and choice != 0:
+            input("\nDruk op Enter om terug te keren naar het hoofdmenu...")
+

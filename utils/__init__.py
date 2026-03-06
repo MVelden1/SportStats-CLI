@@ -8,6 +8,7 @@ from .constants import (
 
 from .auth import refresh_access_token, load_tokens, get_valid_access_token
 from .io_handler import read_json, write_json
+from .time_utils import format_timedelta, to_seconds
 
 __all__ = [
     "STRAVA_ATHLETE_ENDPOINT",
@@ -20,4 +21,6 @@ __all__ = [
     "get_valid_access_token",
     "read_json",
     "write_json",
+    "format_timedelta",
+    "to_seconds",
 ]
