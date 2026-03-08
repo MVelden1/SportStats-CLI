@@ -1,5 +1,7 @@
 import os
 
+from rich.console import Console
+
 from api import get_athlete, get_activities
 from logic.compare import compare_weeks
 from logic.filters import open_filters
@@ -9,18 +11,14 @@ from logic.statistics import open_statistics
 from logic.welcome import welcome
 from utils import refresh_access_token, get_valid_access_token
 
+console = Console()
+
 def show_main_menu(access_token):
     # TODO: afhandeling bij API niet bereikbaar
-    choice = None
-    # os.system('cls' if os.name == 'nt' else 'clear')
-    # haalt de naam gebruiker op voor het welkomstbericht
     athlete = get_athlete(access_token)
     print(welcome(athlete['firstname'], athlete["lastname"]))
 
     while True:
-
-        # os.system('cls' if os.name == 'nt' else 'clear')
-
         print("=== SportStats CLI ===")
         print("1) Bekijk statistieken")
         print("2) Filter activiteiten")
@@ -28,14 +26,9 @@ def show_main_menu(access_token):
         print("4) Vergelijkbare prestaties berekenen")
         print("5) Help")
         print("0) Afsluiten\n")
-        #TODO weghalen
-        print("6) TEST API athlete")
-        print("7) TEST API activities")
-        print("8) TEST Refresh token")
-        print("9) TEST Expired token")
 
         try:
-            choice = int(input("Selecteer een optie (0-5): ").strip())
+            choice = int(console.input("[cyan]Selecteer een optie (0-5): [/cyan]").strip())
 
             match choice:
                 case 1:
@@ -49,6 +42,7 @@ def show_main_menu(access_token):
                     compare_weeks(access_token)
                 case 4:
                     print("Vergelijkbare prestaties berekenen...\n")
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     calculate_performances()
                 case 5:
                     print("Help...\n")
@@ -74,9 +68,9 @@ def show_main_menu(access_token):
                     print("Dit is geen valide optie.\n")
 
         except ValueError:
-            print("Ongeldige invoer!\n")
+            console.print("[bold red]Ongeldige invoer![/bold red]\n")
         
 
-        if choice is not None and choice != 0:
-            input("\nDruk op Enter om terug te keren naar het hoofdmenu...")
+        # if choice is not None and choice != 0:
+        #     input("\nDruk op Enter om terug te keren naar het hoofdmenu...")
 

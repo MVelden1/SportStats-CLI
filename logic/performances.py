@@ -21,16 +21,15 @@ def calculate_performances() -> None:
     }
 
     while True:
-        # os.system('cls' if os.name == 'nt' else 'clear')
-
-
         show_menu(distances)
-
         choice = get_user_choice()
 
-        if choice not in distances:
+        if choice not in distances and choice != 0:
             console.print(f"[bold red]Dit is geen geldige invoer[/bold red]\n")
             continue
+        elif choice == 0:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            return
 
         if choice in distances:
             from_distance = distances[choice].get('km')
@@ -55,8 +54,6 @@ def get_user_choice() -> int | None:
     except ValueError:
         return None
 
-
-# # TODO functie wat opschonen, zodat hij overzichtelijker is: opsplitsen in meerdere functies
 
 def calculate_predicted_time(user_time: str, from_distance: float, distances: dict) -> dict[str, dict[str, str]]:
     """Return predicted times as a dict"""
@@ -110,7 +107,7 @@ my_dict =  {'5km': {'time': '20:00', 'pace': '4:00/km'},
             }
 
 # predicted_times_to_table(my_dict)
-calculate_performances()
+# calculate_performances()
 # to_seconds("00:20:00")
 # calculate_predicted_time("00:20:00", 5)
 
