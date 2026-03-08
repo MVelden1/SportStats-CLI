@@ -7,7 +7,7 @@ from logic.compare import compare_weeks
 from logic.filters import open_filters
 from logic.help import help_info
 from logic.performances import calculate_performances
-from logic.statistics import open_statistics
+from logic.open_last_10_activities import open_last_10_activities
 from logic.welcome import welcome
 from utils import refresh_access_token, get_valid_access_token
 
@@ -20,7 +20,7 @@ def show_main_menu(access_token):
 
     while True:
         print("=== SportStats CLI ===")
-        print("1) Bekijk statistieken")
+        print("1) Bekijk laatste 10 activiteiten")
         print("2) Filter activiteiten")
         print("3) Vergelijk weken")
         print("4) Vergelijkbare prestaties berekenen")
@@ -32,14 +32,15 @@ def show_main_menu(access_token):
 
             match choice:
                 case 1:
-                    print("Statistieken worden geopend...\n")
-                    open_statistics(access_token)
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    print("Laatste 10 activiteiten openen...\n")
+                    open_last_10_activities(access_token, limit = 10)
                 case 2:
                     print("Filters worden geopend...\n")
-                    open_filters(access_token)
+                    open_filters(access_token, limit = 100)
                 case 3:
                     print("Weken vergelijken...\n")
-                    compare_weeks(access_token)
+                    compare_weeks(access_token, limit = 100)
                 case 4:
                     print("Vergelijkbare prestaties berekenen...\n")
                     os.system('cls' if os.name == 'nt' else 'clear')
@@ -69,7 +70,7 @@ def show_main_menu(access_token):
 
         except ValueError:
             console.print("[bold red]Ongeldige invoer![/bold red]\n")
-        
+
 
         # if choice is not None and choice != 0:
         #     input("\nDruk op Enter om terug te keren naar het hoofdmenu...")

@@ -25,3 +25,6 @@ def to_seconds(time: str) -> int:
     return int(hours) * 3600 + int(minutes) * 60 + int(seconds)
 
 
+def min_per_km(distance: float, time: int) -> str:
+    pace_sec_per_km = time / distance
+    return f"{format_timedelta(datetime.timedelta(seconds=pace_sec_per_km))}/km"

@@ -4,12 +4,11 @@ import os
 from rich.console import Console
 from rich.table import Table
 
-from utils import to_seconds, format_timedelta
+from utils import to_seconds, format_timedelta, min_per_km
 
 console = Console()
 
 def calculate_performances() -> None:
-    # print("vergelijkbare prestaties berekenen is nog niet geimplementeerd...\n")
     print("Hier kun je vergelijkbare prestaties berekenen bijv. op basis van een recent gelopen pr.\n"
           "De afstanden die worden berekend zijn 5km, 10km, halve marathon en de marathon.\n")
 
@@ -63,8 +62,8 @@ def calculate_predicted_time(user_time: str, from_distance: float, distances: di
     for _, metric in distances.items():
         predicted = est_time_in_seconds(metric['km'], time_in_seconds, from_distance)
         formatted = format_timedelta(datetime.timedelta(seconds=predicted))
-        min_per_km = est_min_per_km(metric['km'], predicted)
-        metrics= {'time': formatted, 'pace': min_per_km}
+        pace = min_per_km(metric['km'], predicted)
+        metrics= {'time': formatted, 'pace': pace}
 
         predicted_times[metric['label']] = metrics
 
@@ -75,11 +74,6 @@ def calculate_predicted_time(user_time: str, from_distance: float, distances: di
 
 def est_time_in_seconds(distance: float, time_in_seconds: int, from_distance: float) -> int:
     return round(time_in_seconds * (distance / from_distance) ** 1.06)
-
-
-def est_min_per_km(distance: float, time: int) -> str:
-    pace_sec_per_km = time / distance
-    return f"{format_timedelta(datetime.timedelta(seconds=pace_sec_per_km))}/km"
 
 
 def predicted_times_to_table(predicted_times):

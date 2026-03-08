@@ -23,11 +23,11 @@ def load_tokens(token):
 def get_valid_access_token():
     data = read_json(file_path)
     expire_time = datetime.fromtimestamp(data["expires_at"])
-    # Controleert of access token is verlopen. Als verlopen haalt een nieuwe op.
+
     if datetime.now() > expire_time:
         return refresh_access_token()
     return load_tokens(ACCESS_TOKEN)
-# get_valid_access_token()
+
 
 def refresh_access_token():
     url = STRAVA_REFRESH_TOKEN_ENDPOINT
