@@ -10,13 +10,13 @@ from utils import format_timedelta, min_per_km
 
 console = Console()
 
-def open_last_10_activities(access_token, limit):
+def open_last_10_activities(access_token: str, limit: int) -> None:
     activities = get_activities(access_token, limit)
     statistics_table(activities)
     return
 
 
-def statistics_table(activities):
+def statistics_table(activities: list) -> None:
     table = Table(title="activiteiten", box=box.ROUNDED) #box=box.SIMPLE_HEAVY)
 
     table.add_column("Naam", style="cyan")

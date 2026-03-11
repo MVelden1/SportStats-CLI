@@ -13,7 +13,7 @@ from utils import refresh_access_token, get_valid_access_token
 
 console = Console()
 
-def show_main_menu(access_token):
+def show_main_menu(access_token: str) -> None:
     # TODO: afhandeling bij API niet bereikbaar
     athlete = get_athlete(access_token)
     print(welcome(athlete['firstname'], athlete["lastname"]))

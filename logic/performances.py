@@ -76,7 +76,7 @@ def est_time_in_seconds(distance: float, time_in_seconds: int, from_distance: fl
     return round(time_in_seconds * (distance / from_distance) ** 1.06)
 
 
-def predicted_times_to_table(predicted_times):
+def predicted_times_to_table(predicted_times: dict[str, dict[str, str]]) -> None:
     table = Table(title="🏃 Voorspelde tijden")
 
     table.add_column("Afstand", style="cyan")
@@ -93,7 +93,7 @@ def predicted_times_to_table(predicted_times):
     return
 
 
-# TODO weghalen. is nu voor tesen fucties
+# TODO weghalen. is nu voor testen fucties
 my_dict =  {'5km': {'time': '20:00', 'pace': '4:00/km'},
             '10km': {'time': '41:42', 'pace': '4:10/km'},
             'Halve marathon': {'time': '1:32:00', 'pace': '4:21/km'},
