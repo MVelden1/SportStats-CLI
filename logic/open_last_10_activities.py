@@ -1,5 +1,4 @@
 import datetime
-import os
 
 from rich import box
 from rich.console import Console
@@ -35,6 +34,5 @@ def statistics_table(activities: list) -> None:
 
     console.print(table)
     input("Druk op enter om door te gaan...")
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 # open_statistics("969e90f9cf856d2de0f89d5205a1ea334d645847")
