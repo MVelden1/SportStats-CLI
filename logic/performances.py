@@ -1,5 +1,4 @@
 import datetime
-import os
 
 import questionary
 from rich.console import Console

@@ -1,8 +1,7 @@
 import questionary
 from rich.console import Console
-from rich.theme import Theme
 
-from api import get_athlete, get_activities
+from api import get_athlete
 from logic.compare import compare_weeks
 from logic.filters import open_filters
 from logic.help import help_info
