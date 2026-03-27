@@ -1,5 +1,4 @@
 import datetime
-import os
 
 from rich import box
 from rich.console import Console
@@ -10,13 +9,13 @@ from utils import format_timedelta, min_per_km
 
 console = Console()
 
-def open_last_10_activities(access_token, limit):
+def open_last_10_activities(access_token: str, limit: int) -> None:
     activities = get_activities(access_token, limit)
     statistics_table(activities)
     return
 
 
-def statistics_table(activities):
+def statistics_table(activities: list) -> None:
     table = Table(title="activiteiten", box=box.ROUNDED) #box=box.SIMPLE_HEAVY)
 
     table.add_column("Naam", style="cyan")
@@ -35,6 +34,5 @@ def statistics_table(activities):
 
     console.print(table)
     input("Druk op enter om door te gaan...")
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 # open_statistics("969e90f9cf856d2de0f89d5205a1ea334d645847")

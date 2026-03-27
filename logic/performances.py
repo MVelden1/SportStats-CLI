@@ -1,6 +1,6 @@
 import datetime
-import os
 
+import questionary
 from rich.console import Console
 from rich.table import Table
 
@@ -20,31 +20,37 @@ def calculate_performances() -> None:
     }
 
     while True:
-        show_menu(distances)
-        choice = get_user_choice()
+        menu_choices = show_menu(distances)
+        action = questionary.select(
+            "Wat wil je doen\n",
+            choices = menu_choices
+        ).ask()
 
-        if choice not in distances and choice != 0:
-            console.print(f"[bold red]Dit is geen geldige invoer[/bold red]\n")
-            continue
-        elif choice == 0:
-            os.system('cls' if os.name == 'nt' else 'clear')
-            return
+        if action == "back":
+            break
 
-        if choice in distances:
-            from_distance = distances[choice].get('km')
-            distance_label = distances[choice].get('label')
-            example_distance = distances[choice].get('example')
-
-            user_time = console.input(f"[cyan]Voer een {distance_label} tijd in (bijv. {example_distance}): [/cyan]")
-            predicted_times = calculate_predicted_time(user_time, from_distance, distances)
-
-            predicted_times_to_table(predicted_times)
+        get_distance_from_choice(action, distances)
 
 
-def show_menu(menu_items: dict) -> None:
+def show_menu(menu_items: dict) -> list:
+    menu_choices = []
     for index, menu_item in menu_items.items():
-        print(f"{index}) {menu_item['label']}")
-    print("0) terug naar menu")
+        menu_choices.append(questionary.Choice(f"{menu_item['label']}", value=index))
+    menu_choices.append(questionary.Choice("Terug naar menu", value = "back"))
+
+    return menu_choices
+
+
+def get_distance_from_choice(action, distances: dict[int, dict[str, int | str] | dict[str, float | str]]):
+    if action in distances:
+        from_distance = distances[action].get('km')
+        distance_label = distances[action].get('label')
+        example_distance = distances[action].get('example')
+
+        user_time = console.input(f"[cyan]Voer een {distance_label} tijd in (bijv. {example_distance}): [/cyan]")
+        predicted_times = calculate_predicted_time(user_time, from_distance, distances)
+
+        predicted_times_to_table(predicted_times)
 
 
 def get_user_choice() -> int | None:
@@ -76,7 +82,7 @@ def est_time_in_seconds(distance: float, time_in_seconds: int, from_distance: fl
     return round(time_in_seconds * (distance / from_distance) ** 1.06)
 
 
-def predicted_times_to_table(predicted_times):
+def predicted_times_to_table(predicted_times: dict[str, dict[str, str]]) -> None:
     table = Table(title="🏃 Voorspelde tijden")
 
     table.add_column("Afstand", style="cyan")
@@ -93,7 +99,7 @@ def predicted_times_to_table(predicted_times):
     return
 
 
-# TODO weghalen. is nu voor tesen fucties
+# TODO weghalen. is nu voor testen fucties
 my_dict =  {'5km': {'time': '20:00', 'pace': '4:00/km'},
             '10km': {'time': '41:42', 'pace': '4:10/km'},
             'Halve marathon': {'time': '1:32:00', 'pace': '4:21/km'},

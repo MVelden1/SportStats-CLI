@@ -3,7 +3,7 @@ from menu import show_main_menu
 from utils import get_valid_access_token
 
 
-def main():
+def main() -> None:
     load_dotenv()
 
     access_token = get_valid_access_token()

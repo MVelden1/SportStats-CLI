@@ -11,7 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # TODO: onderstaande nog optimaliseren?
 file_path = os.path.join(os.path.dirname(__file__), "tokens.json")
 
-def load_tokens(token):
+def load_tokens(token) -> str | None:
     tokens = read_json(file_path)
     if token == REFRESH_TOKEN:
         return tokens["refresh_token"]
@@ -20,7 +20,7 @@ def load_tokens(token):
     return None
 
 
-def get_valid_access_token():
+def get_valid_access_token() -> str:
     data = read_json(file_path)
     expire_time = datetime.fromtimestamp(data["expires_at"])
 
@@ -29,7 +29,7 @@ def get_valid_access_token():
     return load_tokens(ACCESS_TOKEN)
 
 
-def refresh_access_token():
+def refresh_access_token() -> str:
     url = STRAVA_REFRESH_TOKEN_ENDPOINT
     payload = {
         "client_id": os.getenv("CLIENT_ID"),
