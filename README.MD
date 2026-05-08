@@ -8,8 +8,8 @@ Een command-line applicatie waarmee je je Strava-activiteiten kunt bekijken en a
 |---|---|
 | Bekijk laatste 10 activiteiten (naam, afstand, tijd, tempo) | Beschikbaar |
 | Vergelijkbare prestaties berekenen (5km, 10km, halve marathon, marathon) | Beschikbaar |
-| Activiteiten filteren | In ontwikkeling |
-| Weken vergelijken | In ontwikkeling |
+| Activiteiten filteren op periode, afstand en tempo | Beschikbaar |
+| Afgelopen 4 weken vergelijken | Beschikbaar |
 
 ## Vereisten
 
@@ -112,6 +112,6 @@ SportStats CLI/
 
 ## Roadmap
 
-- [ ] Activiteiten filteren op type, datum of afstand
-- [ ] Weken onderling vergelijken
+- [x] Activiteiten filteren op periode, afstand en tempo
+- [x] Weken onderling vergelijken
 - [ ] Grafieken van voortgang over tijd

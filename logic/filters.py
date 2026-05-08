@@ -83,7 +83,7 @@ def ask_distance() -> float:
 
 def ask_pace() -> float:
     while True:
-        raw = console.input("[cyan]Minimaal tempo in MM:SS (bijv. 6:00): [/cyan]")
+        raw = console.input("[cyan]Minimaal tempo in MM:SS (bijv. 5:00): [/cyan]")
         if ":" in raw:
             parts = raw.split(":")
             try:
