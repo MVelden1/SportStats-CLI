@@ -1,4 +1,5 @@
 import questionary
+from requests import RequestException
 from rich.console import Console
 from rich.panel import Panel
 
@@ -12,8 +13,12 @@ from logic.welcome import welcome
 
 console = Console()
 def show_main_menu(access_token: str) -> None:
-    # TODO: afhandeling bij API niet bereikbaar
-    athlete = get_athlete(access_token)
+    try:
+        athlete = get_athlete(access_token)
+    except RequestException:
+        console.print("[bold red]Kon geen verbinding maken met de Strava API. Controleer je internetverbinding en probeer opnieuw.[/bold red]")
+        return
+
     console.print(
         Panel.fit(
             f"[bold cyan]SportStats CLI[/bold cyan]\n"
@@ -58,5 +63,7 @@ def show_main_menu(access_token: str) -> None:
         if action == "quit":
             console.print("[bold red]Programma afgesloten.")
             break
-
-        action()
+        try:
+            action()
+        except RequestException:
+            console.print("[bold red]Kon de Strava API niet bereiken. Controleer je verbinding en probeer opnieuw.[/bold red]")
