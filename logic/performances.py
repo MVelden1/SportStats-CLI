@@ -1,4 +1,5 @@
 import datetime
+import re
 
 import questionary
 from rich.console import Console
@@ -47,17 +48,19 @@ def get_distance_from_choice(action, distances: dict[int, dict[str, int | str] |
         distance_label = distances[action].get('label')
         example_distance = distances[action].get('example')
 
-        user_time = console.input(f"[cyan]Voer een {distance_label} tijd in (bijv. {example_distance}): [/cyan]")
+        while True:
+            user_time = console.input(f"[cyan]Voer een {distance_label} tijd in (bijv. {example_distance}): [/cyan]")
+            if is_valid_time(user_time):
+                break
+            console.print("[red]Ongeldig formaat. Gebruik MM:SS of HH:MM:SS (bijv. 20:00 of 1:30:00)[/red]\n")
+
         predicted_times = calculate_predicted_time(user_time, from_distance, distances)
 
         predicted_times_to_table(predicted_times)
 
 
-def get_user_choice() -> int | None:
-    try:
-        return int(console.input("\n[bold][cyan]Maak een keuze: [/bold][/cyan]"))
-    except ValueError:
-        return None
+def is_valid_time(time_str: str) -> bool:
+    return bool(re.match(r"^\d{1,2}:\d{2}(:\d{2})?$", time_str))
 
 
 def calculate_predicted_time(user_time: str, from_distance: float, distances: dict) -> dict[str, dict[str, str]]:
@@ -97,17 +100,4 @@ def predicted_times_to_table(predicted_times: dict[str, dict[str, str]]) -> None
     input("Druk op enter om door te gaan...")
 
     return
-
-
-# TODO weghalen. is nu voor testen fucties
-my_dict =  {'5km': {'time': '20:00', 'pace': '4:00/km'},
-            '10km': {'time': '41:42', 'pace': '4:10/km'},
-            'Halve marathon': {'time': '1:32:00', 'pace': '4:21/km'},
-            'Marathon': {'time': '3:11:49', 'pace': '4:32/km'}
-            }
-
-# predicted_times_to_table(my_dict)
-# calculate_performances()
-# to_seconds("00:20:00")
-# calculate_predicted_time("00:20:00", 5)
 

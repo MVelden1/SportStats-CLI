@@ -20,6 +20,7 @@ def load_tokens(token) -> str | None:
     return None
 
 
+#TODO misschien setten naar iets in constants
 def get_valid_access_token() -> str:
     data = read_json(file_path)
     expire_time = datetime.fromtimestamp(data["expires_at"])

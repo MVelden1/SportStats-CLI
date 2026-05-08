@@ -1,9 +1,6 @@
 import requests
-from dotenv import load_dotenv
 from utils import STRAVA_ATHLETE_ENDPOINT, STRAVA_ACTIVITY_ENDPOINT
 
-# TODO Weghalen als alles af is. Nu voor testen
-load_dotenv()
 
 def get_activities(access_token: str, limit: int) -> list:
     url = STRAVA_ACTIVITY_ENDPOINT
