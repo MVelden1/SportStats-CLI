@@ -2,7 +2,7 @@ import datetime
 from rich.console import Console
 from rich.table import Table
 from rich import box
-from utils import format_timedelta, min_per_km
+from .time_utils import format_timedelta, min_per_km
 
 console = Console()
 

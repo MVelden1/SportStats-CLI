@@ -22,5 +22,5 @@ def get_athlete(access_token: str) -> dict:
 
     return response.json()
 
-def _auth_header(acces_token: str) -> dict:
-    return {"Authorization": f"Bearer {acces_token}"}
+def _auth_header(access_token: str) -> dict:
+    return {"Authorization": f"Bearer {access_token}"}

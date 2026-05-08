@@ -32,25 +32,25 @@ def open_filters(access_token: str, limit: int) -> None:
         elif choice == "reset":
             active_filters = {}
         elif choice == "periode":
-            active_filters["periode"] = ask_period()
+            active_filters["period"] = ask_period()
         elif choice == "afstand":
-            active_filters["afstand"] = ask_distance()
+            active_filters["distance"] = ask_distance()
         elif choice == "tempo":
-            active_filters["tempo"] = ask_pace()
+            active_filters["pace"] = ask_pace()
 
 
 def apply_filters(activities: list, filters: dict) -> list:
     result = activities
 
-    if "periode" in filters:
+    if "period" in filters:
         since = filters["period"]
         result = [a for a in result if datetime.datetime.strptime(a['start_date_local'], "%Y-%m-%dT%H:%M:%SZ") >= since]
 
-    if "afstand" in filters:
+    if "distance" in filters:
         distance = filters["distance"]
         result = [a for a in result if (a['distance'] / 1000) >= distance]
 
-    if "tempo" in filters:
+    if "pace" in filters:
         pace = filters["pace"]
         result = [a for a in result if a['average_speed'] >= pace]
 
@@ -88,7 +88,7 @@ def ask_pace() -> float:
             parts = raw.split(":")
             try:
                 seconds_per_km = int(parts[0]) * 60 + int(parts[1])
-                return 1000 / seconds_per_km  # omzetten naar m/s
+                return 1000 / seconds_per_km
             except (ValueError, ZeroDivisionError):
                 pass
         console.print("[red]Ongeldig formaat. Gebruik MM:SS (bijv. 6:00)[/red]")

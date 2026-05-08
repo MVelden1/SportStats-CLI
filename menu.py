@@ -3,7 +3,7 @@ from requests import RequestException
 from rich.console import Console
 from rich.panel import Panel
 
-from api import get_athlete, get_activities
+from api import get_athlete
 from logic.compare import compare_weeks
 from logic.filters import open_filters
 from logic.help import help_info

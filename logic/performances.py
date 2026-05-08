@@ -42,7 +42,7 @@ def show_menu(menu_items: dict) -> list:
     return menu_choices
 
 
-def get_distance_from_choice(action, distances: dict[int, dict[str, int | str] | dict[str, float | str]]):
+def get_distance_from_choice(action: int, distances: dict[int, dict[str, int | str] | dict[str, float | str]]) -> None:
     if action in distances:
         from_distance = distances[action].get('km')
         distance_label = distances[action].get('label')
@@ -98,6 +98,3 @@ def predicted_times_to_table(predicted_times: dict[str, dict[str, str]]) -> None
     console.print()
     console.print(table)
     input("Druk op enter om door te gaan...")
-
-    return
-

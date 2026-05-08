@@ -2,16 +2,13 @@ import os
 from datetime import datetime
 
 import requests
-import urllib3
 
-from utils import STRAVA_REFRESH_TOKEN_ENDPOINT, ACCESS_TOKEN, REFRESH_TOKEN
+from .constants import STRAVA_REFRESH_TOKEN_ENDPOINT, ACCESS_TOKEN, REFRESH_TOKEN
 from utils.io_handler import read_json, write_json
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-# TODO: onderstaande nog optimaliseren?
 file_path = os.path.join(os.path.dirname(__file__), "tokens.json")
 
-def load_tokens(token) -> str | None:
+def load_tokens(token: str) -> str | None:
     tokens = read_json(file_path)
     if token == REFRESH_TOKEN:
         return tokens["refresh_token"]
@@ -20,7 +17,6 @@ def load_tokens(token) -> str | None:
     return None
 
 
-#TODO misschien setten naar iets in constants
 def get_valid_access_token() -> str:
     data = read_json(file_path)
     expire_time = datetime.fromtimestamp(data["expires_at"])
@@ -40,7 +36,7 @@ def refresh_access_token() -> str:
         "f": "json"
     }
 
-    response = requests.post(url, data=payload, verify=False)
+    response = requests.post(url, data=payload)
     write_json(file_path, response.json(), 4)
 
     access_token = load_tokens(ACCESS_TOKEN)
