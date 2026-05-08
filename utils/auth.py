@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 
 from .constants import STRAVA_REFRESH_TOKEN_ENDPOINT, ACCESS_TOKEN, REFRESH_TOKEN
-from utils.io_handler import read_json, write_json
+from .io_handler import read_json, write_json
 
 file_path = os.path.join(os.path.dirname(__file__), "tokens.json")
 
@@ -37,6 +37,7 @@ def refresh_access_token() -> str:
     }
 
     response = requests.post(url, data=payload)
+    response.raise_for_status()
     write_json(file_path, response.json(), 4)
 
     access_token = load_tokens(ACCESS_TOKEN)

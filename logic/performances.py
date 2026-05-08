@@ -42,11 +42,11 @@ def show_menu(menu_items: dict) -> list:
     return menu_choices
 
 
-def get_distance_from_choice(action: int, distances: dict[int, dict[str, int | str] | dict[str, float | str]]) -> None:
-    if action in distances:
-        from_distance = distances[action].get('km')
-        distance_label = distances[action].get('label')
-        example_distance = distances[action].get('example')
+def get_distance_from_choice(choice: int, distances: dict[int, dict[str, int | str] | dict[str, float | str]]) -> None:
+    if choice in distances:
+        from_distance = distances[choice].get('km')
+        distance_label = distances[choice].get('label')
+        example_distance = distances[choice].get('example')
 
         while True:
             user_time = console.input(f"[cyan]Voer een {distance_label} tijd in (bijv. {example_distance}): [/cyan]")
@@ -69,7 +69,7 @@ def calculate_predicted_time(user_time: str, from_distance: float, distances: di
     predicted_times: dict[str, dict[str, str]] = {}
 
     for _, metric in distances.items():
-        predicted = est_time_in_seconds(metric['km'], time_in_seconds, from_distance)
+        predicted = calculate_time_in_seconds(metric['km'], time_in_seconds, from_distance)
         formatted = format_timedelta(datetime.timedelta(seconds=predicted))
         pace = min_per_km(metric['km'], predicted)
         metrics= {'time': formatted, 'pace': pace}
@@ -81,7 +81,7 @@ def calculate_predicted_time(user_time: str, from_distance: float, distances: di
     return predicted_times
 
 
-def est_time_in_seconds(distance: float, time_in_seconds: int, from_distance: float) -> int:
+def calculate_time_in_seconds(distance: float, time_in_seconds: int, from_distance: float) -> int:
     return round(time_in_seconds * (distance / from_distance) ** 1.06)
 
 
