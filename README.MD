@@ -1,117 +1,109 @@
 # SportStats CLI
 
-Een command-line applicatie waarmee je je Strava-activiteiten kunt bekijken en analyseren, rechtstreeks vanuit de terminal.
+A command-line app for viewing and analysing your Strava running activities, straight from the terminal. It connects to the Strava API with OAuth2, refreshes the access token automatically and presents your data in formatted tables.
 
-## Functies
+> The user interface of the app is in Dutch.
 
-| Functie | Status |
+## Features
+
+- **Recent activities:** view your last 10 activities with name, distance, time and pace
+- **Filters:** narrow down activities by period (7, 30 or 90 days, or this year), minimum distance and minimum pace
+- **Week comparison:** compare the last 4 weeks on number of activities, total distance, total time and average pace
+- **Race time predictions:** enter a recent result for 5K, 10K, half marathon or marathon and get predicted times and paces for the other distances (based on Riegel's formula)
+
+## Tech stack
+
+| Package | Used for |
 |---|---|
-| Bekijk laatste 10 activiteiten (naam, afstand, tijd, tempo) | Beschikbaar |
-| Vergelijkbare prestaties berekenen (5km, 10km, halve marathon, marathon) | Beschikbaar |
-| Activiteiten filteren op periode, afstand en tempo | Beschikbaar |
-| Afgelopen 4 weken vergelijken | Beschikbaar |
+| `requests` | HTTP calls to the Strava API |
+| `python-dotenv` | Loading credentials from `.env` |
+| `rich` | Formatted tables and panels in the terminal |
+| `questionary` | Interactive menus |
 
-## Vereisten
+## Requirements
 
 - Python 3.10+
-- Een Strava-account met API-toegang
+- A Strava account with an API application
 
-## Installatie
+## Installation
 
-1. **Clone de repository**
-   ```bash
-   git clone <repo-url>
-   cd SportStats-CLI
-   ```
+```bash
+git clone https://github.com/MVelden1/SportStats-CLI.git
+cd SportStats-CLI
 
-2. **Maak een virtual environment aan en activeer het**
-   ```bash
-   python -m venv .venv
-   .venv\Scripts\activate   # Windows
-   source .venv/bin/activate  # macOS/Linux
-   ```
+python -m venv .venv
+.venv\Scripts\activate        # Windows
+source .venv/bin/activate     # macOS/Linux
 
-3. **Installeer de dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Configuratie
-
-### Strava API instellen
-
-1. Ga naar [strava.com/settings/api](https://www.strava.com/settings/api) en maak een nieuwe applicatie aan.
-2. Noteer je **Client ID** en **Client Secret**.
-3. Haal eenmalig een **refresh token** op met de juiste scopes (`activity:read_all`).
-
-### `.env` aanmaken
-
-Maak een `.env`-bestand aan in de root van het project:
-
-```env
-CLIENT_ID=jouw_client_id
-CLIENT_SECRET=jouw_client_secret
+pip install -r requirements.txt
 ```
 
-### `utils/tokens.json` aanmaken
+## Configuration
 
-Maak het bestand `utils/tokens.json` aan met je initiële tokens:
+### 1. Create a Strava API application
+
+1. Go to [strava.com/settings/api](https://www.strava.com/settings/api) and create an application.
+2. Note your **Client ID** and **Client Secret**.
+3. Obtain a **refresh token** once, with the `activity:read_all` scope.
+
+### 2. Create a `.env` file
+
+Copy `.env.example` to `.env` in the project root and fill in your credentials:
+
+```env
+CLIENT_ID=your_client_id
+CLIENT_SECRET=your_client_secret
+```
+
+### 3. Create `utils/tokens.json`
 
 ```json
 {
-    "access_token": "jouw_access_token",
-    "refresh_token": "jouw_refresh_token",
+    "access_token": "your_access_token",
+    "refresh_token": "your_refresh_token",
     "expires_at": 0
 }
 ```
 
-Zet `expires_at` op `0` zodat het access token direct ververst wordt bij de eerste start.
+Setting `expires_at` to `0` makes the app refresh the access token on first start. After that the file is updated automatically.
 
-## Gebruik
+## Usage
 
 ```bash
 python main.py
 ```
 
-De applicatie verbindt automatisch met de Strava API, vernieuwt het access token indien nodig en toont het hoofdmenu.
+The app connects to Strava, refreshes the token if needed and opens the main menu.
 
-## Projectstructuur
+## Project structure
 
 ```
-SportStats CLI/
+SportStats-CLI/
 ├── api/
-│   ├── __init__.py          # Exporteert API-functies
-│   └── strava_api.py        # Strava API-aanroepen (athlete, activities)
+│   └── strava_api.py              # Strava API calls (athlete, activities)
 ├── logic/
-│   ├── compare.py           # Weken vergelijken (in ontwikkeling)
-│   ├── filters.py           # Activiteiten filteren (in ontwikkeling)
-│   ├── help.py              # Help-informatie
-│   ├── open_last_10_activities.py  # Tabel met laatste activiteiten
-│   ├── performances.py      # Voorspelde racetijden berekenen
-│   └── welcome.py           # Welkomstbericht
+│   ├── compare.py                 # Compare the last 4 weeks
+│   ├── filters.py                 # Filter activities
+│   ├── help.py                    # Help information
+│   ├── open_last_10_activities.py # Table of recent activities
+│   ├── performances.py            # Race time predictions
+│   └── welcome.py                 # Welcome message
 ├── utils/
-│   ├── auth.py              # OAuth2 token beheer en vernieuwen
-│   ├── constants.py         # API-endpoints en constanten
-│   ├── io_handler.py        # JSON lezen/schrijven
-│   ├── time_utils.py        # Tijdconversies en tempoberekeningen
-│   └── tokens.json          # Lokaal opgeslagen tokens (niet in git)
-├── .env                     # API-credentials (niet in git)
-├── main.py                  # Entrypoint
-├── menu.py                  # Hoofdmenu
+│   ├── auth.py                    # OAuth2 token handling and refresh
+│   ├── constants.py               # API endpoints and constants
+│   ├── io_handler.py              # Reading and writing JSON
+│   ├── tables.py                  # Shared table output
+│   └── time_utils.py              # Time conversions and pace calculations
+├── test/                          # API tests and HTTP requests
+├── main.py                        # Entry point
+├── menu.py                        # Main menu
 └── requirements.txt
 ```
 
-## Dependencies
-
-| Package | Gebruik |
-|---|---|
-| `requests` | HTTP-aanroepen naar de Strava API |
-| `python-dotenv` | Laden van `.env`-variabelen |
-| `rich` | Opgemaakte tabellen en panelen in de terminal |
-| `questionary` | Interactieve menu's |
-
 ## Roadmap
 
-- [x] Activiteiten filteren op periode, afstand en tempo
-- [x] Weken onderling vergelijken
-- [ ] Grafieken van voortgang over tijd
+- [x] Recent activities overview
+- [x] Filter by period, distance and pace
+- [x] Compare weeks
+- [x] Race time predictions
+- [ ] Charts showing progress over time

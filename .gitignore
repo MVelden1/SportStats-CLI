@@ -30,3 +30,12 @@ htmlcov/
 .DS_Store
 Thumbs.db
 /.env
+
+# Local secrets and data
+utils/tokens*.json
+.env.*
+!.env.example
+**/http-client.private.env.json
+test/api/*.json
+.claude/
+Notes.txt
